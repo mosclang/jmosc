@@ -73,20 +73,7 @@ public class Mosc {
         return "";
     }
 
-     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
-        // System.setProperty("java.library.path", "libs/");
-        // Field fieldSysPath = ClassLoader.class.getDeclaredField("sys_paths");
-        // fieldSysPath.setAccessible(true);
-        // fieldSysPath.set(null, null);
-        // System.out.println(System.getProperty("java.library.path"));
-        //String source = "kabo \"java\" nani JWrapper\ntii fib(n) {\n" +
-        //        "    nii n < 2 segin niin n;\n" +
-        //        "    segin niin fib(n - 2) + fib(n - 1);\n" +
-        //        "}\n" +
-        //        "A.yira(fib(10))\n" +
-        //        "JWrapper.status(\"OK\")\n" +
-        //        "JWrapper.report(\"test\", \"TValue\")\n" +
-        //        "A.yira(A.waati())";
+     public static void main(String[] args) {
         Mosc.init("javamosc");
         System.out.println("Version::" + Mosc.INTERFACE.MSCGetVersionNumber());
         int count = 1;
