@@ -1,0 +1,4 @@
+# script for ussd
+_JINPUT_["newVal"] = "molo"
+A.yira(_JINPUT_)
+JWrapper.report("data", _JINPUT_)

@@ -1,0 +1,4 @@
+kulu JWrapper {
+    dunan dialen report(key, value);
+    dunan dialen status(value);
+}
