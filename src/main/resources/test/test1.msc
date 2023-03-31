@@ -1,4 +1,14 @@
 # script for ussd
-_JINPUT_["newVal"] = "molo"
+#kabo "spring-http" nani SpringHttp
+#kabo "jdate" nani JDate
+
+
+nin togo = "Issiaka"
+A.yira("Hello")
+_({"hey": "Hoy ${togo + " TOGOLA"}", "age": 24})
+__("name", "molo")
+#__("ret", SpringHttp.get("https://oms.orangemali.com/api/v1/orangemobile"))
+#__("date", JDate.now)
+#__("dateString", JDate.date("yyyy-MM-dd HH:mm"))
 A.yira(_JINPUT_)
-JWrapper.report("data", _JINPUT_)
+A.yira("${(2..10).fitini}")

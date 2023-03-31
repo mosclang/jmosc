@@ -13,6 +13,7 @@ public interface IMosc extends Library {
     void freeVM(Pointer vm);
     MSCConfig.VMReturnCode interpret(Pointer vm, String module, String source);
     void MSCInitConfig(MSCConfig.ByReference config);
+    void MSCInitExternClassMethods(MSCConfig.MSCExternClassMethods.ByReference methods);
     void MSCVMSetConfig(MSCConfig.ByReference config);
     void setJVMModuleResolver(Pointer vm, MSCConfig.MSCLoadModuleFn resolver);
     void MSCCollectGarbage(MVM mvm);
@@ -105,7 +106,8 @@ public interface IMosc extends Library {
     // and then the constructor will be invoked when the allocator returns.
     //
     // Returns a pointer to the foreign object's data.
-    Pointer MSCSetSlotNewExtern(Pointer vm, int slot, int classSlot, SizeT size);
+    Pointer MSCSetSlotNewExtern(Pointer vm, int slot, int classSlot, int size);
+    void MSCSetSlotNewJVMClass(Pointer vm);
 
     // Stores a new empty list in [slot].
     void MSCSetSlotNewList(Pointer vm, int slot);

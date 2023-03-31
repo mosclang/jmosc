@@ -25,6 +25,7 @@ public class MSCRuntime {
         this.mvm = new MVM(moscInterface.newVM(config, this.jmvmConfig));
         // this.moscInterface.MSCVMSetConfig(this.config);
     }
+
     public MSCRuntime(IMosc moscInterface, MSCConfig.ByReference config, JavaWrapper.Config.ByReference jmvmConfig) {
         this.moscInterface = moscInterface;
         this.config = config;
@@ -32,6 +33,7 @@ public class MSCRuntime {
 
         this.mvm = new MVM(moscInterface.newVM(config, this.jmvmConfig));
     }
+
     public MSCRuntime(IMosc moscInterface) {
         this.moscInterface = moscInterface;
         this.config = new MSCConfig.ByReference();
@@ -65,10 +67,13 @@ public class MSCRuntime {
     }
 
     private String buildInput(Map<String, String> params) {
-        if (params.isEmpty()) return "kabo \"java\" nani JWrapper\nnin _JINPUT_ = {}\n";
+        System.out.println("buildInput::: " + params);
+        String head = "tii _(map) {\nJWrapper.report(map)\n}\n" +
+                "tii __(key, value) {\nJWrapper.report(key, value)\n}\n";
+        if (params.isEmpty()) return "kabo \"java\" nani JWrapper\nnin _JINPUT_ = {}\n" + head + "\n";
         StringBuilder ret = new StringBuilder("kabo \"java\" nani JWrapper\nnin _JINPUT_ = {");
         params.forEach((k, v) -> ret.append(k).append(":").append(v).append(","));
-        return ret.toString().replaceAll(",$", "}\n");
+        return ret.toString().replaceAll(",$", "}\n") + "\n" + head + "\n";
     }
 
     public void shutdown() {
@@ -82,7 +87,8 @@ public class MSCRuntime {
     public MVM vm() {
         return this.mvm;
     }
-    public Map<String, Object> output(){
+
+    public Map<String, Object> output() {
         return javaWrapper.channel.data;
     }
 }

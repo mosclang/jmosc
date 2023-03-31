@@ -21,7 +21,14 @@ import org.mosc.lang.customs.SizeT;
 })
 public class MSCConfig extends Structure {
 
-
+    @Structure.FieldOrder({"handle"})
+    public static class JVMClass extends Structure implements Structure.ByReference {
+        public JVMClass(Pointer pointer) {
+            super(pointer);
+            read();
+        }
+        public Pointer handle = null;
+    }
     @Structure.FieldOrder({"source", "onComplete", "userData"})
     public static class MSCLoadModuleResult extends Structure {
         public String source;
@@ -34,7 +41,7 @@ public class MSCConfig extends Structure {
     }
 
     @Structure.FieldOrder({"allocate", "finalize"})
-    public static class MSCExternClassMethods extends Structure {
+    public static class MSCExternClassMethods extends Structure  {
         // The callback invoked when the foreign object is created.
         //
         // This must be provided. Inside the body of this, it must call
@@ -46,6 +53,7 @@ public class MSCConfig extends Structure {
         //
         // This may be `NULL` if the foreign class does not need to finalize.
         public MSCFinalizerFn finalize;
+        public  static class ByReference extends MSCExternClassMethods implements Structure.ByReference  {}
     }
 
     public interface MSCReallocator extends Callback {
@@ -64,8 +72,7 @@ public class MSCConfig extends Structure {
         void invoke(Pointer mvm);
     }
 
-    public interface MSCFinalizerFn extends Callback {
-        void invoke(Pointer data);
+    public interface MSCFinalizerFn extends MSCExternMethodFn {
     }
 
     public interface MSCBindExternMethodFn extends Callback {

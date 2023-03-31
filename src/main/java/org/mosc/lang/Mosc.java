@@ -78,10 +78,11 @@ public class Mosc {
         System.out.println("Version::" + Mosc.INTERFACE.MSCGetVersionNumber());
         int count = 1;
         while (count > 0) {
-        String source = loadResource("test1.msc");
+        String source = loadResource("test2.msc");
             count--;
             MSCRuntime runtime = Mosc.newRuntime();
-            runtime.registerPackage(JMSCHello.registry());
+
+            runtime.registerPackage(JMSCHello.registry(runtime));
             int finalCount = count;
             runtime.run("<script>", source, new HashMap<String, String>() {{
                 put("imei", "1092020022");
@@ -92,5 +93,8 @@ public class Mosc {
             runtime.shutdown();
             System.out.println("Content::" + runtime.javaWrapper.channel.data);
         }
+    }
+    public static <T> int sizeOf(Class<T> clazz) {
+        return Native.getNativeSize(clazz);
     }
 }

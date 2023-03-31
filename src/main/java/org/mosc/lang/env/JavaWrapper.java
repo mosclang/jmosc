@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class JavaWrapper {
+
     private final List<PackageRegistry> packages = new ArrayList<>();
     public Channel channel = new Channel(new HashMap<>());
     public JWrapperModuleResolver loadModule = (name) -> {
@@ -93,16 +94,20 @@ public class JavaWrapper {
     }
 
     public MSCConfig.MSCExternClassMethods resolveExternClass(Pointer vm, String moduleName, String className) {
-        MSCConfig.MSCExternClassMethods methods = new MSCConfig.MSCExternClassMethods();
+        MSCConfig.MSCExternClassMethods.ByReference methods = new MSCConfig.MSCExternClassMethods.ByReference();
+        // System.out.println("Allocated:: " + methods.allocate + "))" + methods.finalize);
+        // Mosc.INTERFACE.MSCInitExternClassMethods(methods);
         ModuleRegistry module = findModule(moduleName);
         if (module == null) {
             return null;
         }
         ClassRegistry clazz = module.findClass(className);
         if (clazz == null) return null;
+        // System.out.println("resolveExternClass:::" + moduleName + "," + className + ')' + module + '-' + clazz + ')' + methods.allocate);
+
+        methods.finalize = (MSCConfig.MSCFinalizerFn) clazz.findMethodFn(true, "<finalize>");
         methods.allocate = clazz.findMethodFn(true, "<allocate>");
-        ///
-        // methods.finalize = (MSCConfig.MSCFinalizerFn) clazz.findMethodFn(true, "<finalize>");
+        methods.write();
         return methods;
     }
 
@@ -129,6 +134,13 @@ public class JavaWrapper {
         public static class ByReference extends Config implements Structure.ByReference {
         }
     }
+
+    public interface BindExternClassFn extends Callback {
+        MSCConfig.MSCExternClassMethods invoke(
+                Pointer mvm, String module, String className);
+    }
+
+
 
     public static class ClassBuilder {
         private final ClassRegistry registry;
@@ -283,12 +295,14 @@ public class JavaWrapper {
         private List<MethodRegistry> methods;
 
         public MSCConfig.MSCExternMethodFn findMethodFn(boolean isStatic, String signature) {
+            // System.out.println("Findind method " + signature);
             MethodRegistry found = findMethod(isStatic, signature);
             if (found == null) return null;
             return found.getMethod();
         }
 
         public MethodRegistry findMethod(boolean isStatic, String signature) {
+            // System.out.println("Findind method " + signature);
             for (MethodRegistry methodRegistry : methods) {
                 if (isStatic == methodRegistry.isStatic && methodRegistry.signature.equals(signature))
                     return methodRegistry;

@@ -1,3 +1,9 @@
 kulu JHello {
     dunan dialen helloJava()
 }
+
+dunan kulu DHello {
+    dilan kura() {
+
+    }
+}
