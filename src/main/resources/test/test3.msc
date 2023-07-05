@@ -1,0 +1,19 @@
+
+tii main() {
+ nin jwt = "getToken()"
+ nii(!jwt) {
+ A.yira("molo")
+ }
+
+ nin try = Djuru.kura {
+   nin a = ({"APIKey": "JRNvFMzm9RYVJ8VVjNMPTWvoJpWoU004LSIFzBpEvtaeO1s/6WiPE3ieNXmx8i2H+fjPig==", "Authorization": "Bearer $jwt"})
+ }
+
+ try.aladie()
+ nii (try.fili == gansan) {
+  #error
+  #__("bills", data)
+ }
+
+}
+main()

@@ -31,7 +31,8 @@ public class JMSCHello {
                         "\n" +
                         "dunan kulu DIHello {\n" +
                         "    dilan kura() {\n" +
-                        "    ale._open()" +
+                        "    ale._open()\n" +
+                        "    A.yira(_JINPUT_)"+
                         "\n" +
                         "    }\n" +
                         "dunan _open()" +
@@ -57,9 +58,7 @@ public class JMSCHello {
                     diel.write();
                     foreign.handle = diel.getPointer();
                     foreign.write();
-                    System.out.println("foreign:: " + foreign.handle + ')' + diel.test);
                     diel = new DIHElement(foreign.handle);
-                    System.out.println("foreign:: " + foreign.handle + ')' + diel.test);
                 })
                 .end()
                 .end()

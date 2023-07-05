@@ -5,6 +5,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import org.mosc.lang.MSCConfig;
 import org.mosc.lang.Mosc;
+import org.mosc.lang.helpers.JSON;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,9 +31,18 @@ public class JavaWrapper {
         //return null;
     };
 
-    public JWrapperReporter reporter = (vm, key) -> {
-        // System.out.println(method + " call::=: " + key + '=' + value);
+    public JWrapperReporter reporter = (vm, key, dataType) -> {
         int valueSlot = 2;
+        if (dataType == 1) {
+            // map data type
+            this.channel.data.put(key, JSON.toMap(Mosc.INTERFACE.MSCGetSlotString(vm, valueSlot)));
+            return;
+        }
+        if (dataType == 2) {
+            // List data type
+            this.channel.data.put(key, JSON.toList(Mosc.INTERFACE.MSCGetSlotString(vm, valueSlot)));
+            return;
+        }
         MSCConfig.MSCType type = Mosc.INTERFACE.MSCGetSlotType(vm, valueSlot);
         switch (type) {
             case MSC_TYPE_NUM:
@@ -112,7 +122,7 @@ public class JavaWrapper {
     }
 
     public interface JWrapperReporter extends Callback {
-        void invoke(Pointer vm, String key);
+        void invoke(Pointer vm, String key, int type);
     }
 
     public interface JWrapperModuleResolver extends Callback {
@@ -139,7 +149,6 @@ public class JavaWrapper {
         MSCConfig.MSCExternClassMethods invoke(
                 Pointer mvm, String module, String className);
     }
-
 
 
     public static class ClassBuilder {
