@@ -1,3 +1,10 @@
-kabo "jhello" nani DIHello
 
-A.yira(DIHello.kura())
+
+kabo "kunfe" nani Kunfeko
+
+nin rand = Kunfeko.kura()
+
+__("customerId", rand.int())
+__("subscriptionId", rand.int(20000))
+__("status", 0)
+A.yira(_JINPUT_)

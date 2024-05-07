@@ -8,10 +8,10 @@ import org.mosc.lang.env.packages.JMSCHello;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Mosc {
@@ -83,10 +83,11 @@ public class Mosc {
 
             runtime.registerPackage(JMSCHello.registry(runtime));
             int finalCount = count;
-            runtime.run("<script>", source, new HashMap<String, String>() {{
-                put("imei", "1092020022");
-                put("msisdn", "76299780");
-                put("count", "\"c" + finalCount + "\"");
+            runtime.run("<script>", source, new HashMap<String, Object>() {{
+                put("imei", 1092020022);
+                put("msisdn", 76299780);
+                put("list", new int[] { 1, 2, 3});
+                put("count", "c" + finalCount + "");
             }});
 
             runtime.shutdown();
