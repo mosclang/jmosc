@@ -16,8 +16,9 @@ public class MVM {
     }
 
 
-    public static class MSCHandle{
+    public static class MSCHandle {
         Pointer underlined;
+
         /**
          * Create from native pointer.  Don't use this unless you know what
          * you're doing.

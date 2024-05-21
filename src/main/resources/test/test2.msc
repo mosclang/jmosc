@@ -1,10 +1,15 @@
 
 
 kabo "kunfe" nani Kunfeko
-
+kabo "jhello" nani JHello, DIHello
 nin rand = Kunfeko.kura()
 
+JHello.helloJava()
 __("customerId", rand.int())
 __("subscriptionId", rand.int(20000))
 __("status", 0)
 A.yira(_JINPUT_)
+
+nin dieh = DIHello.kura()
+
+A.yira(dieh.value)

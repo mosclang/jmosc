@@ -4,6 +4,7 @@ import com.sun.jna.Callback;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import org.mosc.lang.MSCConfig;
+import org.mosc.lang.MVM;
 import org.mosc.lang.Mosc;
 import org.mosc.lang.helpers.JSON;
 
@@ -122,7 +123,7 @@ public class JavaWrapper {
     }
 
     public interface JWrapperReporter extends Callback {
-        void invoke(Pointer vm, String key, int type);
+        void invoke(Pointer djuru, String key, int type);
     }
 
     public interface JWrapperModuleResolver extends Callback {
@@ -177,7 +178,7 @@ public class JavaWrapper {
 
     public static class ModuleBuilder {
         private final ModuleRegistry registry;
-        private PackageBuilder parent;
+        private final PackageBuilder parent;
 
         public ModuleBuilder(PackageBuilder parent, String name, String source) {
             this.registry = new ModuleRegistry(name, source, new ArrayList<>());

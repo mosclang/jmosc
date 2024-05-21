@@ -69,7 +69,7 @@ public class MSCConfig extends Structure {
     }
 
     public interface MSCExternMethodFn extends Callback {
-        void invoke(Pointer mvm);
+        void invoke(Pointer djuru);
     }
 
     public interface MSCFinalizerFn extends MSCExternMethodFn {
